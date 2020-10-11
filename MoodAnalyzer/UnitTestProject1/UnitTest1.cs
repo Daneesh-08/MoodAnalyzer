@@ -47,5 +47,16 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual("HAPPY", result);
         }
+        [TestMethod]
+        [DataRow(null)]
+        public void TestMethod5(string message)
+        {
+            //Arrange
+            MoodAnalyze moodAnalyze = new MoodAnalyze(message);
+            //Act
+            var result = moodAnalyze.AnalyzeMood();
+            //Assert
+            Assert.AreEqual("HAPPY", result);
+        }
     }
 }
