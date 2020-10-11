@@ -46,17 +46,40 @@ namespace UnitTestProject1
             var result = moodAnalyze.AnalyzeMood();
             //Assert
             Assert.AreEqual("HAPPY", result);
-        }
+        }       
         [TestMethod]
         [DataRow(null)]
         public void TestMethod5(string message)
         {
-            //Arrange
-            MoodAnalyze moodAnalyze = new MoodAnalyze(message);
-            //Act
-            var result = moodAnalyze.AnalyzeMood();
-            //Assert
-            Assert.AreEqual("HAPPY", result);
+            try
+            {
+                //Arrange
+                MoodAnalyze moodAnalyze = new MoodAnalyze(message);
+                //Act
+                var result = moodAnalyze.AnalyzeMood();
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("Mood should not be null", e.Message);
+            }
+        }
+        [TestMethod]
+        [DataRow("")]
+        public void GTestMethod6(string message)
+        {
+            try
+            {
+                //Arrange
+                MoodAnalyze moodAnalyze = new MoodAnalyze(message);
+                //Act
+                var result = moodAnalyze.AnalyzeMood();
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("Mood should not be empty", e.Message);
+            }
         }
     }
 }

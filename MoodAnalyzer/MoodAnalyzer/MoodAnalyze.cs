@@ -18,28 +18,32 @@ namespace MoodAnalyzer
         {
             try
             {
+                if (message.Equals(string.Empty))
+                    throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.EMPTY_MESSAGE, "Mood should not be empty");
                 if (message.Contains("Sad"))
                     return "SAD";
                 else
                     return "HAPPY";
             }
-            catch
+            catch (NullReferenceException)
             {
-                return "HAPPY";
+                throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.NULL_MESSAGE, "Mood should not be null");
             }
         }
         public string AnalyzeMood()
         {
             try
             {
+                if (this.message.Equals(string.Empty))
+                    throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.EMPTY_MESSAGE, "Mood should not be empty");
                 if (this.message.Contains("Sad"))
                     return "SAD";
                 else
                     return "HAPPY";
             }
-            catch
+            catch (NullReferenceException)
             {
-                return "HAPPY";
+                throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.NULL_MESSAGE, "Mood should not be null");
             }
         }
     }
