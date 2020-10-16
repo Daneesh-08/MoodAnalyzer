@@ -66,7 +66,7 @@ namespace UnitTestProject1
         }
         [TestMethod]
         [DataRow("")]
-        public void GTestMethod6(string message)
+        public void TestMethod6(string message)
         {
             try
             {
@@ -79,6 +79,51 @@ namespace UnitTestProject1
             {
                 //Assert
                 Assert.AreEqual("Mood should not be empty", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeClassName_ShouldReturnMoodAnalyseObject()
+        {
+            //Arrange
+            string message = null;
+            object expected = new MoodAnalyze(message);
+            //Act
+            object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzer.MoodAnalyze", "MoodAnalyze");
+            //Assert
+            expected.Equals(obj);
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperClassName_ShouldThrowMoodAnalysisException()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzerProblem.ModAnalize", "ModAnalize");
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("class not found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperConstructorName_ShouldThrowMoodAnalysisException()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzer.MoodAnalyze", "ModAnalize");
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("constructor not found", e.Message);
             }
         }
     }
