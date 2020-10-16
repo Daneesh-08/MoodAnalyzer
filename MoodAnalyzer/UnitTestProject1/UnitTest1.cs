@@ -101,7 +101,7 @@ namespace UnitTestProject1
                 string message = null;
                 object expected = new MoodAnalyze(message);
                 //Act
-                object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzerProblem.ModAnalize", "ModAnalize");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzer.ModAnalize", "ModAnalize");
             }
             catch (MoodAnalyzeException e)
             {
@@ -119,6 +119,53 @@ namespace UnitTestProject1
                 object expected = new MoodAnalyze(message);
                 //Act
                 object obj = MoodAnalyserFactory.CreateMoodAnalyserObject("MoodAnalyzer.MoodAnalyze", "ModAnalize");
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("constructor not found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeClassName_ShouldReturnMoodAnalyseObjectUsingParametrisedConstructor()
+        {
+
+            //Arrange
+            string message = null;
+            object expected = new MoodAnalyze(message);
+            //Act
+            object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "MoodAnalyze");
+            //Assert
+            expected.Equals(obj);
+        }
+
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperClassName_ShouldThrowMoodAnalysisExceptionForParameterisedConstructor()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.ModAnalize", "ModAnalize");
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("class not found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenMoodAnalyzeImproperConstructorName_ShouldThrowMoodAnalysisExceptionForParameterisedConstructor()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                object expected = new MoodAnalyze(message);
+                //Act
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "ModAnalize");
             }
             catch (MoodAnalyzeException e)
             {
