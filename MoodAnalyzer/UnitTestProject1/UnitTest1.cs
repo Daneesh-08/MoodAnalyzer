@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyzer;
+
+
 namespace UnitTestProject1
 {
     [TestClass]
@@ -134,7 +136,7 @@ namespace UnitTestProject1
             string message = null;
             object expected = new MoodAnalyze(message);
             //Act
-            object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "MoodAnalyze");
+            object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "MoodAnalyze", message);
             //Assert
             expected.Equals(obj);
         }
@@ -148,7 +150,7 @@ namespace UnitTestProject1
                 string message = null;
                 object expected = new MoodAnalyze(message);
                 //Act
-                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.ModAnalize", "ModAnalize");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.ModAnalize", "ModAnalize", message);
             }
             catch (MoodAnalyzeException e)
             {
@@ -165,12 +167,37 @@ namespace UnitTestProject1
                 string message = null;
                 object expected = new MoodAnalyze(message);
                 //Act
-                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "ModAnalize");
+                object obj = MoodAnalyserFactory.CreateMoodAnalyserObjectUsingParameterisedConstructor("MoodAnalyzer.MoodAnalyze", "ModAnalize", message);
             }
             catch (MoodAnalyzeException e)
             {
                 //Assert
                 Assert.AreEqual("constructor not found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void Given_Happy_Message_Using_Reflection_When_Proper_Should_Return_Happy()
+        {
+            //Arrange
+            string message = "HAPPY";
+            string methodName = "AnalyzeMood";
+            //Act
+            string actual = MoodAnalyserFactory.InvokeAnalyseMood(message, methodName);
+            //Assert
+            Assert.AreEqual("HAPPY", actual);
+        }
+        [TestMethod]
+        public void Given_Improper_Method_Name_Should_Throw_MoodAnalysisException_Indicating_No_Such_Method()
+        {
+            try
+            {
+                //Act
+                string actual = MoodAnalyserFactory.InvokeAnalyseMood("HAPPY", "AnaliseMod");
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("no such method", e.Message);
             }
         }
     }
