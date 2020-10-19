@@ -67,5 +67,24 @@ namespace MoodAnalyzer
                 throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.NO_SUCH_METHOD, "no such method");
             }
         }
+        public static string SetField(string message, string fieldName)
+        {
+            try
+            {
+                MoodAnalyze moodanalyzer = new MoodAnalyze();
+                Type type = Type.GetType("MoodAnalyzer.MoodAnalyze");
+                FieldInfo fieldInfo = type.GetField(fieldName);
+                if (message == null)
+                {
+                    throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.EMPTY_MESSAGE, "message should not be null");
+                }
+                fieldInfo.SetValue(moodanalyzer, message);
+                return moodanalyzer.message;
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyzeException(MoodAnalyzeException.ExceptionType.NO_SUCH_FIELD, "no such field found");
+            }
+        }
     }
 }

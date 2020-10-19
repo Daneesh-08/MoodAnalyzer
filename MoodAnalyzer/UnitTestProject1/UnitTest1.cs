@@ -176,7 +176,7 @@ namespace UnitTestProject1
             }
         }
         [TestMethod]
-        public void Given_Happy_Message_Using_Reflection_When_Proper_Should_Return_Happy()
+        public void GivenHappyMessageUsingReflectionWhenProper_ShouldReturnHAPPY()
         {
             //Arrange
             string message = "HAPPY";
@@ -187,7 +187,7 @@ namespace UnitTestProject1
             Assert.AreEqual("HAPPY", actual);
         }
         [TestMethod]
-        public void Given_Improper_Method_Name_Should_Throw_MoodAnalysisException_Indicating_No_Such_Method()
+        public void GivenImproperMethodName_ShouldThrowMoodAnalysisException()
         {
             try
             {
@@ -198,6 +198,51 @@ namespace UnitTestProject1
             {
                 //Assert
                 Assert.AreEqual("no such method", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenHappyMessageWithReflection_ShouldReturnHAPPY()
+        {
+            //Arrange
+            string message = "HAPPY";
+            string fieldName = "message";
+            //Act
+            string actual = MoodAnalyserFactory.SetField(message, fieldName);
+            //Assert
+            Assert.AreEqual("HAPPY", actual);
+        }
+        [TestMethod]
+        public void GivenImproperFieldName_ShouldThrowExceptionWithNoField()
+        {
+            try
+            {
+                //Arrange
+                string message = "HAPPY";
+                string fieldName = "mesege";
+                //Act
+                string actual = MoodAnalyserFactory.SetField(message, fieldName);
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("no such field found", e.Message);
+            }
+        }
+        [TestMethod]
+        public void GivenNullMessage_ShouldThrowException()
+        {
+            try
+            {
+                //Arrange
+                string message = null;
+                string fieldName = "message";
+                //Act
+                string actual = MoodAnalyserFactory.SetField(message, fieldName);
+            }
+            catch (MoodAnalyzeException e)
+            {
+                //Assert
+                Assert.AreEqual("message should not be null", e.Message);
             }
         }
     }
